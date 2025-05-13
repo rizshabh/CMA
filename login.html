@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Tuition Class Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: #f8f9fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+    form {
+      max-width: 400px;
+      width: 100%;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgb(0 0 0 / 0.1);
+    }
+    form h2 {
+      margin-bottom: 20px;
+      color: #0d6efd;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<main>
+  <form id="loginForm" novalidate>
+    <h2>Login</h2>
+    <div class="mb-3">
+      <label for="loginEmail" class="form-label">Email</label>
+      <input type="email" class="form-control" id="loginEmail" required />
+      <div class="invalid-feedback">Please enter a valid email.</div>
+    </div>
+    <div class="mb-3">
+      <label for="loginPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="loginPassword" required minlength="6" />
+      <div class="invalid-feedback">Password must be at least 6 characters.</div>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+    <p class="mt-3 text-center">
+      Don't have an account? <a href="student-registration.html">Register here</a>
+    </p>
+  </form>
+</main>
+
+<script>
+  // Navbar injection script
+  const navHTML = `
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Tuition Class Management</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" 
+        aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="login.html">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-registration.html">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-dashboard.html">Admin Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="fee-management.html">Fee Management</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-portal.html">Student Portal</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>`;
+  document.getElementById('navbar-placeholder').innerHTML = navHTML;
+
+  // Form validation and submission
+  const loginForm = document.getElementById('loginForm');
+  loginForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    if (!loginForm.checkValidity()) {
+      loginForm.classList.add('was-validated');
+      return;
+    }
+
+    const email = document.getElementById('loginEmail').value.trim();
+    // Simulate role-based redirection (this would be replaced by real auth backend logic)
+    // For demo: emails containing 'admin' go to admin dashboard, others go to student portal
+    if(email.toLowerCase().includes('admin')) {
+      alert("Login successful as Admin!");
+      window.location.href = "admin-dashboard.html";
+    } else {
+      alert("Login successful as Student!");
+      window.location.href = "student-portal.html";
+    }
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

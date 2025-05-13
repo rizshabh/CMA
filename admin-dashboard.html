@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard - Tuition Class Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: #f8f9fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex-grow: 1;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .summary-cards {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .card-stat {
+      flex: 1;
+      min-width: 250px;
+      color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgb(0 0 0 / 0.1);
+    }
+    .card-students { background: #0d6efd; }
+    .card-payments { background: #198754; }
+    .card-courses { background: #ffc107; color: #212529; }
+    section.chart-section {
+      margin-top: 2rem;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgb(0 0 0 / 0.1);
+    }
+    table {
+      background: white;
+      box-shadow: 0 8px 25px rgb(0 0 0 / 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+    thead {
+      background-color: #0d6efd;
+      color: white;
+    }
+    tbody tr:hover {
+      background-color: #f1f8ff;
+      cursor: pointer;
+    }
+    @media(max-width: 768px) {
+      .summary-cards {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder"></div>
+
+  <main>
+    <h1 class="mb-4 text-primary">Admin Dashboard</h1>
+
+    <div class="summary-cards">
+      <div class="card-stat card-students">
+        <h4>Students Registered</h4>
+        <p id="studentCount" class="display-5 mb-0">0</p>
+      </div>
+      <div class="card-stat card-payments">
+        <h4>Payments Completed</h4>
+        <p id="paymentsCompleted" class="display-5 mb-0">0</p>
+      </div>
+      <div class="card-stat card-courses">
+        <h4>Courses Offered</h4>
+        <p id="coursesOffered" class="display-5 mb-0">0</p>
+      </div>
+    </div>
+
+    <section>
+      <h3 class="mt-5">Students List</h3>
+      <table class="table table-hover" id="studentsTable" aria-label="Students Table">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Full Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Course</th>
+            <th>Date of Birth</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    // Navbar injection script
+    const navHTML = `
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">Tuition Class Management</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="student-registration.html">Register</a></li>
+            <li class="nav-item"><a class="nav-link active" href="admin-dashboard.html">Admin Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="fee-management.html">Fee Management</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="student-portal.html">Student Portal</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>`;
+    document.getElementById('navbar-placeholder').innerHTML = navHTML;
+
+    // Load students from localStorage
+    function loadStudents() {
+      const students = JSON.parse(localStorage.getItem('students')) || [];
+      const studentsTableBody = document.querySelector('#studentsTable tbody');
+      studentsTableBody.innerHTML = ''; // Clear existing rows
+
+      students.forEach(student => {
+        const row = `
+          <tr>
+            <td>${student.studentId}</td>
+            <td>${student.fullName}</td>
+            <td>${student.contactNumber}</td>
+            <td>${student.emailAddress}</td>
+            <td>${student.courseSelection}</td>
+            <td>${student.dob}</td>
+          </tr>
+        `;
+        studentsTableBody.innerHTML += row;
+      });
+
+      // Update summary cards
+      document.getElementById('studentCount').textContent = students.length;
+    }
+
+    // Call the function to load students when the page loads
+    document.addEventListener('DOMContentLoaded', loadStudents);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

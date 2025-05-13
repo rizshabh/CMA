@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+            padding: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container mt-5 mb-5">
+        <section id="profile" class="card">
+            <h2>Profile</h2>
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Student ID:</strong> 123456</p>
+            <p><strong>Email:</strong> john.doe@example.com</p>
+        </section>
+        <section id="courses" class="card">
+            <h2>Courses</h2>
+            <ul>
+                <li>Mathematics</li>
+                <li>Physics</li>
+                <li>Computer Science</li>
+            </ul>
+        </section>
+        <section id="grades" class="card">
+            <h2>Grades</h2>
+            <p><strong>Mathematics:</strong> A</p>
+            <p><strong>Physics:</strong> B+</p>
+            <p><strong>Computer Science:</strong> A-</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Student Portal</p>
+    </footer>
+
+    <script>
+        // Navbar injection script
+        const navHTML = `
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Tuition Class Management</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="student-registration.html">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="admin-dashboard.html">Admin Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="fee-management.html">Fee Management</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="student-portal.html">Student Portal</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>`;
+        document.getElementById('navbar-placeholder').innerHTML = navHTML;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
