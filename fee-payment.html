@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fee Payment - Tuition Class Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: #f8f9fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+    .payment-container {
+      max-width: 700px;
+      width: 100%;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgb(0 0 0 / 0.1);
+      text-align: center;
+    }
+    .qr-container {
+      margin-top: 20px;
+    }
+    .qr-container img {
+      width: 200px;
+      height: 200px;
+    }
+    .receipt-details {
+      margin-top: 20px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<main>
+  <div class="payment-container">
+    <h2>Fee Payment</h2>
+    <div class="receipt-details" id="receiptDetails"></div>
+    <div class="qr-container">
+      <img src="qr-code.png" alt="UPI QR Code" />
+      <p>Pay ₹<span id="totalFee"></span> to UPI ID: <strong>r786chaurasiya@okhdfcbank</strong></p>
+    </div>
+    <button class="btn btn-primary mt-3" onclick="sendReceipt()">Confirm Payment</button>
+  </div>
+</main>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const fullName = urlParams.get('name');
+  const selectedClass = urlParams.get('class');
+  const selectedSubjects = urlParams.get('subjects');
+  const totalFee = urlParams.get('totalFee');
+  const emailAddress = urlParams.get('email');
+
+  document.getElementById('receiptDetails').innerHTML = `
+    <p><strong>Name:</strong> ${fullName}</p>
+    <p><strong>Class:</strong> ${selectedClass}</p>
+    <p><strong>Subjects:</strong> ${selectedSubjects}</p>
+    <p><strong>Total Fee:</strong> ₹${totalFee}</p>
+  `;
+  document.getElementById('totalFee').textContent = totalFee;
+
+  async function sendReceipt() {
+    const response = await fetch('/send-receipt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: fullName,
+        email: emailAddress,
+        class: selectedClass,
+        subjects: selectedSubjects,
+        totalFee: totalFee
+      })
+    });
+
+    if (response.ok) {
+      alert(`Payment confirmed! A receipt has been sent to ${emailAddress}.`);
+      window.location.href = 'index.html';
+    } else {
+      alert('Error sending receipt. Please try again.');
+    }
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
